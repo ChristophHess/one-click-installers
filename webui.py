@@ -4,7 +4,6 @@ import os
 import shutil
 import site
 import subprocess
-import json
 import sys
 
 script_dir = os.getcwd()
@@ -37,7 +36,7 @@ def check_env():
     if not conda_exist:
         print("Conda is not installed. Exiting...")
         sys.exit()
-
+    
     # Ensure this is a new environment and not the base environment
     if os.environ["CONDA_DEFAULT_ENV"] == "base":
         print("Create an environment for this project and activate it. Exiting...")
@@ -49,22 +48,19 @@ def install_dependencies():
     print("What is your GPU")
     print()
     print("A) NVIDIA")
-    print("B) NVIDIA Modern (Cuda 11.8)")
-    print("C) AMD")
-    print("D) Apple M Series")
-    print("E) None (I want to run in CPU mode)")
+    print("B) AMD")
+    print("C) Apple M Series")
+    print("D) None (I want to run in CPU mode)")
     print()
     gpuchoice = input("Input> ").lower()
 
     # Install the version of PyTorch needed
     if gpuchoice == "a":
         run_cmd("conda install -y -k pytorch[version=2,build=py3.10_cuda11.7*] torchvision torchaudio pytorch-cuda=11.7 cuda-toolkit ninja git -c pytorch -c nvidia/label/cuda-11.7.0 -c nvidia", assert_success=True, environment=True)
-    if gpuchoice == "b":
-        run_cmd("conda install -y -k pytorch[version=2,build=py3.10_cuda11.8*] torchvision torchaudio pytorch-cuda=11.7 cuda-toolkit ninja git -c pytorch -c nvidia/label/cuda-11.8.0 -c nvidia", assert_success=True, environment=True)
-    elif gpuchoice == "c":
+    elif gpuchoice == "b":
         print("AMD GPUs are not supported. Exiting...")
         sys.exit()
-    elif gpuchoice == "d" or gpuchoice == "e":
+    elif gpuchoice == "c" or gpuchoice == "d":
         run_cmd("conda install -y -k pytorch torchvision torchaudio cpuonly git -c pytorch", assert_success=True, environment=True)
     else:
         print("Invalid choice. Exiting...")
