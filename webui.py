@@ -4,6 +4,7 @@ import os
 import shutil
 import site
 import subprocess
+import json
 import sys
 
 script_dir = os.getcwd()
