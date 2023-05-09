@@ -60,7 +60,7 @@ def install_dependencies():
     if gpuchoice == "a":
         run_cmd("conda install -y -k pytorch[version=2,build=py3.10_cuda11.7*] torchvision torchaudio pytorch-cuda=11.7 cuda-toolkit ninja git -c pytorch -c nvidia/label/cuda-11.7.0 -c nvidia", assert_success=True, environment=True)
     if gpuchoice == "b":
-        run_cmd("conda install -y -k pytorch[version=2,build=py3.10_cuda11.8*] torchvision torchaudio pytorch-cuda=11.7 cuda-toolkit ninja git -c pytorch -c nvidia/label/cuda-11.8.0 -c nvidia", assert_success=True, environment=True)
+        run_cmd("conda install -y -k pytorch[version=2,build=py3.10_cuda11.8*] torchvision torchaudio pytorch-cuda=11.8 cuda-toolkit ninja git -c pytorch -c nvidia/label/cuda-11.8.0 -c nvidia", assert_success=True, environment=True)
     elif gpuchoice == "c":
         print("AMD GPUs are not supported. Exiting...")
         sys.exit()
