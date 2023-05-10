@@ -166,24 +166,27 @@ def download_model():
 def run_model():
     os.chdir("text-generation-webui")
     # Get flags from settings.json under "start_parameters"
-    settings = json.load(open("settings.json", "r"))["start_parameters"]
+    print("Loading settings.json...")
+    settings = json.load(open("settings.json", "r"))
+    settings = settings["start_parameters"]
     # Check if any setting is in the settings.json file where the value is true
-    if any(settings.values()):
-        flags = []
-        for setting in settings:
-            if settings[setting]:
-                value = settings[setting]
-                # Check if json value is null
-                if value is None or value == "" or value == False or value == 0:
-                    continue
-                if isinstance(value, bool):
-                    flags.append("--" + setting.replace("_", "-"))
-                elif isinstance(value, str):
-                    flags.append("--" + setting.replace("_", "-") + " " + value)
-                elif isinstance(value, int):
-                    flags.append("--" + setting.replace("_", "-") + " " + str(value))
-        # Set your flags in the settings.json!
-        run_cmd("python server.py --chat --model-menu " + " ".join(flags), environment=True)
+    flags = []
+    for setting in settings:
+        if settings[setting]:
+            value = settings[setting]
+            # Check if json value is null
+            if value is None or value == "" or value == False or value == 0:
+                continue
+            if isinstance(value, bool):
+                flags.append("--" + setting.replace("_", "-"))
+            elif isinstance(value, str):
+                flags.append("--" + setting.replace("_", "-") + " " + value)
+            elif isinstance(value, int):
+                flags.append("--" + setting.replace("_", "-") + " " + str(value))
+    print("Settings loaded!")
+    print(f"running python server.py --chat --model-menu {' '.join(flags)}")
+    # Set your flags in the settings.json!
+    run_cmd("python server.py --chat --model-menu " + " ".join(flags), environment=True)
 
 
 if __name__ == "__main__":
