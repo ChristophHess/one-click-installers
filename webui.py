@@ -178,11 +178,11 @@ def run_model():
             if value is None or value == "" or value == False or value == 0:
                 continue
             if isinstance(value, bool):
-                flags.append("--" + setting.replace("_", "-"))
+                flags.append("--" + setting)
             elif isinstance(value, str):
-                flags.append("--" + setting.replace("_", "-") + " " + value)
+                flags.append("--" + setting + " " + value)
             elif isinstance(value, int):
-                flags.append("--" + setting.replace("_", "-") + " " + str(value))
+                flags.append("--" + setting + " " + str(value))
     print("Settings loaded!")
     print(f"running python server.py --chat --model-menu {' '.join(flags)}")
     # Set your flags in the settings.json!
